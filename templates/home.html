@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block content %}
+
+
+
+<div class="d-flex flex-wrap px-5 pt-3 align-items-center">
+
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-8">
+        <p style="color:black; text-align: center">
+          <strong>Welcome to our online library,</strong> Please click every Button of this site.Home,Profile etc and Enjoy by learning new things with these book.
+        </p>
+      </div>
+    </div>
+  </div>
+  
+  
+      
+      
+  </div>
+
+
+
+  <div class="d-flex flex-wrap justify-content-center p-4">
+    <div class=" col-6 bg-white text-center p-4 " >
+      <h5 class='text-primary my-2'><strong>All Category Book</h5>
+    {% for cat in category %}
+    {% comment %} <div class="form-check"> {% endcomment %}
+       
+      <input class="form-check-input" type="radio" name="category" id=" {{cat.name}}">
+      <label class="form-check-label" for=" {{cat.name}}">
+        <a href="{% url 'category_wise_post' cat.slug %}"  class="text-decoration-none nav-link btn btn-warning text-dark">{{cat.name}}</a>
+      </label>
+   
+    {% comment %} </div> {% endcomment %}
+    {% endfor %}
+    </strong>
+    
+  </div>
+
+  </div>
+
+
+
+
+  
+<div>
+  <h4 class='mx-4 text-black'><strong>{{data | length}} results found</strong></h4>
+
+    <div class="d-flex d-wrap justify-content-center pt-5 mx-5">
+      {% for car in data %}
+      <div class="col-sm-3 ">
+        <div class="card mx-2">
+          <div class="card-body">
+            <img src="{{car.image.url}}" class="card-img-top" alt="...">
+            {% comment %} <h5 class="card-title"><a href="{% url 'detail_post' post.id %}" class="text-decoration-none text-dark">{{post.title}}</a></h5> {% endcomment %}
+                {% comment %} <p class="card-text">{{post.content |truncatewords:10}}</p> {% endcomment %}
+            <p> Book title : {{car.title}}
+            <p>Price: {{car.borrowing_price}}
+              <p>Description: {{car.description|truncatewords:10}}</p>
+              <h5><a href="{% url 'detail_post' car.id %}" class="btn btn-primary text-decoration-none text-dark">View Details</a></h5>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div> 
+    </div>
+
+
+{% endblock %}

@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="row">
+    <div class="col-6">
+        <div class="card m-2">
+            <div class="card-body">
+                <img src="{{book.image.url}}" class="card-img-top" alt="..." style="width:50%;">
+            </div>
+        </div>
+    </div>
+    <div class="col-6">
+        <div class="card m-2">
+            <div class="card-body">
+                <p> <strong>Book Title :</strong> {{book.title}}</p>
+                <p><strong>Description :</strong>  {{book.description}}</p>
+                <p><strong>Borrowing_Price :</strong> {{book.borrowing_price}}</p>
+              {% if user.is_authenticated %}
+              <form action="{% url 'borrow_book' book.id %}" method="post"> 
+              {% comment %} <form action="#" method="post">  {% endcomment %}
+                    {% csrf_token %}
+                    <button class='btn btn-primary text-white' type="submit">Borrowed Book</button>
+                </form> 
+
+             {% endif %}    
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<div class="card m-2">
+    <h5 class="p-3">Total Comments : {{ comments | length}}</h5>
+    {% for comment in comments %}
+  <div class="card-body border m-2">
+        <p><b>{{comment.name}}</b> {{comment.created_on}}</p>
+        <p>{{comment.body}}</p>
+    </div>
+    {% endfor %}
+{% comment %} </div>
+<div class="card m-2">
+    <div class="card-body">
+        <form method="post">
+            <strong>Write Review Of This Book</strong>
+            {% csrf_token %}
+            {{comment_form | crispy}}
+
+            <button class="btn btn-warning">Submit</button>
+    </div>
+</div>  {% endcomment %}
+
+{% endblock %}
